@@ -438,7 +438,7 @@ def parse_opt(known=False):
     # 模型的配置 models文件夹下面有不同模型的配置
     parser.add_argument('--cfg', type=str, default='models/yolov5s.yaml', help='model.yaml path')
     # 指定数据集
-    parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
+    parser.add_argument('--data', type=str, default=ROOT / 'data/mydata.yaml', help='dataset.yaml path')
     # 超参数
     parser.add_argument('--hyp', type=str, default=ROOT / 'data/hyps/hyp.scratch.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=300)
