@@ -433,32 +433,51 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default=ROOT / 'yolov5s.pt', help='initial weights path')
-    parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
+    # 指定模型 空：表示程序中基本的参数
+    parser.add_argument('--weights', type=str, default=ROOT / '', help='initial weights path')
+    # 模型的配置 models文件夹下面有不同模型的配置
+    parser.add_argument('--cfg', type=str, default='models/yolov5s.yaml', help='model.yaml path')
+    # 指定数据集
     parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
+    # 超参数
     parser.add_argument('--hyp', type=str, default=ROOT / 'data/hyps/hyp.scratch.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=300)
     parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs')
     parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=640, help='train, val image size (pixels)')
+    # 填充图片
     parser.add_argument('--rect', action='store_true', help='rectangular training')
+    # 在模型的基础上进行训练 default 需要指定成模型的路径
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
+    # 只保存最后一次epoch训练的模型
     parser.add_argument('--nosave', action='store_true', help='only save final checkpoint')
+    # 只在最后一次epoch进行测试
     parser.add_argument('--noval', action='store_true', help='only validate final epoch')
+    # 锚点/锚筐
     parser.add_argument('--noautoanchor', action='store_true', help='disable autoanchor check')
+    # 超参数优化
     parser.add_argument('--evolve', type=int, nargs='?', const=300, help='evolve hyperparameters for x generations')
     parser.add_argument('--bucket', type=str, default='', help='gsutil bucket')
+    # 图片换成，进行更快的训练
     parser.add_argument('--cache', type=str, nargs='?', const='ram', help='--cache images in "ram" (default) or "disk"')
+    # 根据上一轮训练的效果，给参数加一些权重
     parser.add_argument('--image-weights', action='store_true', help='use weighted image selection for training')
+    # gpu cpu
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    # 图片尺寸进行变换
     parser.add_argument('--multi-scale', action='store_true', help='vary img-size +/- 50%%')
+    # 数据集是单类别还是多类别
     parser.add_argument('--single-cls', action='store_true', help='train multi-class data as single-class')
+    # 优化器
     parser.add_argument('--adam', action='store_true', help='use torch.optim.Adam() optimizer')
+    # 分布式训练
     parser.add_argument('--sync-bn', action='store_true', help='use SyncBatchNorm, only available in DDP mode')
+    # 数据加载的进行数
     parser.add_argument('--workers', type=int, default=0, help='maximum number of dataloader workers')
     parser.add_argument('--project', default=ROOT / 'runs/train', help='save to project/name')
     parser.add_argument('--name', default='exp', help='save to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--quad', action='store_true', help='quad dataloader')
+    # lr会进行调整
     parser.add_argument('--linear-lr', action='store_true', help='linear LR')
     parser.add_argument('--label-smoothing', type=float, default=0.0, help='Label smoothing epsilon')
     parser.add_argument('--patience', type=int, default=100, help='EarlyStopping patience (epochs without improvement)')
